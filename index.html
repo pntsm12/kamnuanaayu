@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คำนวณอายุ – รู้อายุที่แน่นอนพร้อมวันเดือนปี</title>
+<meta name="description" content="คำนวณอายุออนไลน์ฟรี รู้อายุที่แน่นอนเป็นปี เดือน วัน ชั่วโมง พร้อมราศี ปีนักษัตร และ fun facts">
+<meta name="keywords" content="คำนวณอายุ, อายุ, วันเกิด, คำนวณวันเกิด, ราศี, ปีนักษัตร">
+<meta property="og:title" content="คำนวณอายุ – รู้อายุที่แน่นอน">
+<meta property="og:description" content="คำนวณอายุออนไลน์ฟรี พร้อมราศี ปีนักษัตร และ fun facts">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://kamnuanaayu.com/">
+<!-- Google AdSense -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #FFFFFF;
+  --bg2:     #F7F7F5;
+  --bg3:     #F0EFEC;
+  --border:  #E4E4E0;
+  --border2: #D4D4CF;
+  --text:    #1A1917;
+  --text2:   #706F6B;
+  --text3:   #B0AFA9;
+  --ink:     #1A1917;
+  --accent:  #2563EB;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Sarabun', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  height: 52px;
+  display: flex; align-items: center;
+  padding: 0 24px;
+}
+.logo {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.3px;
+}
+
+/* ── Ad ── */
+.ad-strip {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: center;
+  padding: 8px 16px;
+}
+.ad-728 {
+  width: 100%; max-width: 728px; height: 90px;
+  background: var(--bg);
+  border: 1.5px dashed var(--border2);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text3); font-size: 12px;
+}
+@media (max-width: 600px) { .ad-728 { height: 60px; } }
+.ad-mid { display: flex; justify-content: center; margin: 28px 0; }
+
+/* ── Layout ── */
+.page-wrap { max-width: 640px; margin: 0 auto; padding: 40px 20px 64px; }
+
+/* ── Heading ── */
+.page-heading { margin-bottom: 32px; }
+.page-heading h1 {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: clamp(32px, 7vw, 48px);
+  font-weight: 700; color: var(--ink);
+  line-height: 1.15; letter-spacing: -0.8px;
+}
+.page-heading p { margin-top: 8px; font-size: 15px; color: var(--text2); }
+
+/* ── Form elements ── */
+hr.section-hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+.field-label {
+  font-size: 13px; font-weight: 600;
+  color: var(--text2); letter-spacing: 0.3px;
+  margin-bottom: 8px; display: block;
+}
+.field-header {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 8px;
+}
+.era-toggle {
+  display: flex;
+  border: 1.5px solid var(--border2);
+  border-radius: 7px; overflow: hidden;
+}
+.era-btn {
+  padding: 4px 16px; border: none;
+  background: transparent; color: var(--text2);
+  font-family: 'Sarabun', sans-serif;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all .15s; line-height: 1.6;
+}
+.era-btn + .era-btn { border-left: 1.5px solid var(--border2); }
+.era-btn.active { background: var(--ink); color: #fff; }
+
+.date-inputs { display: grid; grid-template-columns: 0.8fr 1.5fr 1.2fr; gap: 8px; }
+@media (max-width: 380px) {
+  .date-inputs { grid-template-columns: 1fr 1fr; }
+  .date-inputs .select-wrap:last-child { grid-column: 1 / -1; }
+}
+
+.select-wrap { position: relative; }
+.select-wrap::after {
+  content: '▾'; position: absolute;
+  right: 11px; top: 50%; transform: translateY(-50%);
+  color: var(--text3); pointer-events: none; font-size: 11px;
+}
+select {
+  width: 100%; padding: 10px 30px 10px 12px;
+  background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: 8px; font-family: 'Sarabun', sans-serif;
+  font-size: 15px; color: var(--text);
+  outline: none; -webkit-appearance: none; appearance: none;
+  cursor: pointer; transition: border-color .15s, box-shadow .15s;
+}
+select:hover { border-color: var(--border2); }
+select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+
+/* ── Buttons ── */
+.btn-calc {
+  width: 100%; margin-top: 24px; padding: 13px;
+  background: var(--ink); color: #fff; border: none;
+  border-radius: 9px; font-family: 'Sarabun', sans-serif;
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  letter-spacing: 0.2px; transition: opacity .15s, transform .1s;
+}
+.btn-calc:hover { opacity: 0.85; }
+.btn-calc:active { transform: scale(0.99); }
+
+.btn-today {
+  width: 100%; margin-top: 8px; padding: 11px;
+  background: transparent; border: 1.5px solid var(--border);
+  border-radius: 9px; font-family: 'Sarabun', sans-serif;
+  font-size: 14px; color: var(--text2); cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.btn-today:hover { border-color: var(--border2); color: var(--text); }
+
+/* ── Result ── */
+.result-box {
+  display: none; margin-top: 36px;
+  animation: fadeUp .35s ease;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Age hero */
+.result-main {
+  padding: 32px 0 28px;
+  border-top: 1.5px solid var(--border);
+  border-bottom: 1.5px solid var(--border);
+  margin-bottom: 20px;
+}
+.result-label {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 6px;
+}
+.result-age {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: clamp(72px, 18vw, 108px);
+  font-weight: 700; color: var(--ink);
+  line-height: 1; letter-spacing: -3px;
+}
+.result-unit {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 28px; font-weight: 400; color: var(--text2);
+  margin-left: 8px; vertical-align: bottom; margin-bottom: 8px;
+  display: inline-block; letter-spacing: -0.5px;
+}
+.result-detail { margin-top: 10px; font-size: 17px; color: var(--text2); }
+.result-detail strong { color: var(--text); font-weight: 600; }
+
+/* Stats grid */
+.stats-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border);
+  border: 1.5px solid var(--border);
+  border-radius: 10px; overflow: hidden; margin-bottom: 12px;
+}
+.stat-cell { background: var(--bg); padding: 18px 16px; text-align: center; }
+.stat-num {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 26px; font-weight: 700; color: var(--ink);
+  letter-spacing: -0.5px; line-height: 1.1;
+}
+.stat-label { font-size: 12px; color: var(--text3); margin-top: 3px; }
+
+/* Countdown banner */
+.countdown-banner {
+  background: var(--ink); color: #fff;
+  border-radius: 10px; padding: 18px 20px;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 14px;
+}
+.countdown-days {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 40px; font-weight: 700;
+  line-height: 1; letter-spacing: -1px;
+  flex-shrink: 0;
+}
+.countdown-text { font-size: 14px; line-height: 1.5; }
+.countdown-text .cd-label { font-size: 11px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+.countdown-text strong { font-size: 15px; font-weight: 600; }
+
+/* Fun fact + zodiac row */
+.extra-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 12px;
+}
+@media (max-width: 420px) { .extra-row { grid-template-columns: 1fr; } }
+
+.extra-card {
+  background: var(--bg2); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 16px;
+}
+.extra-card .ec-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
+}
+.extra-card .ec-val {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 18px; font-weight: 700; color: var(--ink);
+  line-height: 1.3;
+}
+.extra-card .ec-sub { font-size: 13px; color: var(--text2); margin-top: 2px; }
+
+/* Fun fact card */
+.funfact-card {
+  background: var(--bg2); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 16px 18px;
+  margin-bottom: 12px;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.funfact-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.funfact-text { font-size: 14px; color: var(--text2); line-height: 1.6; }
+.funfact-text strong { color: var(--ink); font-weight: 600; }
+
+/* Share button */
+.btn-share {
+  width: 100%; padding: 12px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 9px; font-family: 'Sarabun', sans-serif;
+  font-size: 14px; color: var(--text2);
+  cursor: pointer; margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all .15s;
+}
+.btn-share:hover { border-color: var(--ink); color: var(--ink); }
+
+/* Copy toast */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ink); color: #fff;
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 14px; font-weight: 500;
+  transition: transform .3s ease; z-index: 999;
+  pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── Info ── */
+.info-section { border-top: 1px solid var(--border); padding-top: 32px; }
+.info-section h2 {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 18px; font-weight: 700; color: var(--ink);
+  margin-bottom: 8px; letter-spacing: -0.2px;
+}
+.info-section h2.mt { margin-top: 24px; }
+.info-section p { font-size: 14px; color: var(--text2); line-height: 1.85; }
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 20px; text-align: center;
+  font-size: 13px; color: var(--text3);
+}
+footer a { color: var(--text3); text-decoration: none; }
+footer a:hover { color: var(--text2); text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="logo">คำนวณอายุ</span>
+</header>
+
+<div class="ad-strip">
+  <div class="ad-728">📢 Google AdSense — 728×90 Leaderboard (Top)</div>
+</div>
+
+<div class="page-wrap">
+
+  <div class="page-heading">
+    <h1>คำนวณอายุ</h1>
+    <p>รู้อายุที่แน่นอน พร้อมราศี ปีนักษัตร และอีกกี่วันจะถึงวันเกิด</p>
+  </div>
+
+  <!-- Birth date -->
+  <div class="field-header">
+    <span class="field-label" style="margin-bottom:0;">วันเดือนปีเกิด</span>
+    <div class="era-toggle">
+      <button class="era-btn active" id="btnBE" onclick="switchEra('BE')">พ.ศ.</button>
+      <button class="era-btn" id="btnCE" onclick="switchEra('CE')">ค.ศ.</button>
+    </div>
+  </div>
+  <div class="date-inputs">
+    <div class="select-wrap"><select id="bDay"><option value="">วัน</option></select></div>
+    <div class="select-wrap"><select id="bMonth"><option value="">เดือน</option></select></div>
+    <div class="select-wrap"><select id="bYear"><option value="">ปี</option></select></div>
+  </div>
+
+  <hr class="section-hr">
+
+  <span class="field-label" id="toDateLabel">คำนวณถึงวันที่ (พ.ศ.)</span>
+  <div class="date-inputs">
+    <div class="select-wrap"><select id="toDay"><option value="">วัน</option></select></div>
+    <div class="select-wrap"><select id="toMonth"><option value="">เดือน</option></select></div>
+    <div class="select-wrap"><select id="toYear"><option value="">ปี</option></select></div>
+  </div>
+
+  <button class="btn-calc" onclick="calculate()">คำนวณอายุ</button>
+  <button class="btn-today" onclick="setToday()">ใช้วันนี้เป็นวันคำนวณ</button>
+
+  <!-- ── RESULT ── -->
+  <div class="result-box" id="resultBox">
+
+    <!-- อายุหลัก -->
+    <div class="result-main">
+      <div class="result-label">อายุของคุณ</div>
+      <div>
+        <span class="result-age" id="ageYears">–</span><span class="result-unit">ปี</span>
+      </div>
+      <div class="result-detail" id="ageDetail"><strong>–</strong> เดือน <strong>–</strong> วัน</div>
+    </div>
+
+    <!-- สถิติ 4 ช่อง -->
+    <div class="stats-row">
+      <div class="stat-cell">
+        <div class="stat-num" id="totalMonths">–</div>
+        <div class="stat-label">เดือนทั้งหมด</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num" id="totalWeeks">–</div>
+        <div class="stat-label">สัปดาห์ทั้งหมด</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num" id="totalDays">–</div>
+        <div class="stat-label">วันทั้งหมด</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num" id="totalHours">–</div>
+        <div class="stat-label">ชั่วโมงทั้งหมด</div>
+      </div>
+    </div>
+
+    <!-- Countdown วันเกิด -->
+    <div class="countdown-banner" id="countdownBanner">
+      <div class="countdown-days" id="countdownDays">–</div>
+      <div class="countdown-text">
+        <div class="cd-label">นับถอยหลัง</div>
+        <div id="countdownMsg"><strong>วันเกิดถัดไป</strong></div>
+      </div>
+    </div>
+
+    <!-- ราศี + ปีนักษัตร -->
+    <div class="extra-row">
+      <div class="extra-card">
+        <div class="ec-label">ราศีเกิด</div>
+        <div class="ec-val" id="zodiacTh">–</div>
+        <div class="ec-sub" id="zodiacEmoji"></div>
+      </div>
+      <div class="extra-card">
+        <div class="ec-label">ปีนักษัตร</div>
+        <div class="ec-val" id="chineseZodiac">–</div>
+        <div class="ec-sub" id="chineseEmoji"></div>
+      </div>
+    </div>
+
+    <!-- Fun fact -->
+    <div class="funfact-card">
+      <div class="funfact-icon">✨</div>
+      <div class="funfact-text" id="funFact">–</div>
+    </div>
+
+    <!-- Share -->
+    <button class="btn-share" onclick="copyResult()">
+      <span>📋</span> คัดลอกผลลัพธ์เพื่อแชร์
+    </button>
+
+  </div>
+
+  <!-- Ad mid -->
+  <div class="ad-mid">
+    <div class="ad-728">📢 Google AdSense — 728×90 Leaderboard (In-content)</div>
+  </div>
+
+  <!-- SEO -->
+  <div class="info-section">
+    <h2>วิธีใช้เครื่องคำนวณอายุ</h2>
+    <p>เลือก วัน เดือน ปีเกิด (พ.ศ. หรือ ค.ศ.) แล้วกดคำนวณ ระบบจะแสดงอายุที่แน่นอน พร้อมราศี ปีนักษัตร นับถอยหลังวันเกิด และ fun fact เกี่ยวกับชีวิตของคุณ</p>
+    <h2 class="mt">ใช้คำนวณอายุสำหรับอะไรบ้าง</h2>
+    <p>มีประโยชน์ในหลายสถานการณ์ เช่น สมัครงาน ทำประกันชีวิต สมัครเรียนหรือสอบ รวมถึงการเช็คสิทธิ์ต่างๆ ที่กำหนดตามช่วงอายุ</p>
+  </div>
+
+  <!-- Ad bottom -->
+  <div class="ad-mid" style="margin-bottom:0;">
+    <div class="ad-728">📢 Google AdSense — 728×90 Leaderboard (Bottom)</div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2568 คำนวณอายุออนไลน์ · <a href="#">นโยบายความเป็นส่วนตัว</a> · <a href="#">ติดต่อ</a></p>
+  <p style="margin-top:4px;">ผลลัพธ์เป็นการคำนวณจากวันที่กรอก ควรตรวจสอบกับทะเบียนบ้านอย่างเป็นทางการ</p>
+</footer>
+
+<div class="toast" id="toast">คัดลอกแล้ว! 🎉</div>
+
+<script>
+const thaiMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+
+const daySelect  = document.getElementById('bDay');
+const monSelect  = document.getElementById('bMonth');
+const yearSelect = document.getElementById('bYear');
+const toDay      = document.getElementById('toDay');
+const toMon      = document.getElementById('toMonth');
+const toYear     = document.getElementById('toYear');
+
+let currentEra = 'BE';
+let lastResult = null;
+
+/* ── Dropdowns ── */
+function fillDaysMons(dSel, mSel) {
+  for (let d = 1; d <= 31; d++) dSel.innerHTML += `<option value="${d}">${d}</option>`;
+  thaiMonths.forEach((m, i) => mSel.innerHTML += `<option value="${i+1}">${m}</option>`);
+}
+fillDaysMons(daySelect, monSelect);
+fillDaysMons(toDay, toMon);
+
+function fillYears(sel, era, label) {
+  const prev = sel.value;
+  sel.innerHTML = `<option value="">ปี (${label})</option>`;
+  const nowCE = new Date().getFullYear();
+  if (era === 'BE') {
+    for (let y = nowCE + 543; y >= 2430; y--) sel.innerHTML += `<option value="${y}">${y}</option>`;
+  } else {
+    for (let y = nowCE; y >= 1887; y--) sel.innerHTML += `<option value="${y}">${y}</option>`;
+  }
+  if (prev) {
+    const conv = era === 'CE' ? String(parseInt(prev) - 543) : String(parseInt(prev) + 543);
+    sel.value = conv || prev;
+  }
+}
+
+function switchEra(era) {
+  currentEra = era;
+  document.getElementById('btnBE').classList.toggle('active', era === 'BE');
+  document.getElementById('btnCE').classList.toggle('active', era === 'CE');
+  const label = era === 'BE' ? 'พ.ศ.' : 'ค.ศ.';
+  document.getElementById('toDateLabel').textContent = `คำนวณถึงวันที่ (${label})`;
+  fillYears(yearSelect, era, label);
+  fillYears(toYear, era, label);
+}
+switchEra('BE');
+
+function setToday() {
+  const t = new Date();
+  toDay.value  = t.getDate();
+  toMon.value  = t.getMonth() + 1;
+  toYear.value = currentEra === 'BE' ? t.getFullYear() + 543 : t.getFullYear();
+}
+setToday();
+
+function fmt(n) { return n.toLocaleString('th-TH'); }
+function toCE(v) { return currentEra === 'BE' ? parseInt(v) - 543 : parseInt(v); }
+
+/* ── ราศี ── */
+function getZodiac(day, month) {
+  const signs = [
+    { name: 'มกร',      emoji: '♑ แพะทะเล',   from: [12,22], to: [1,19]  },
+    { name: 'กุมภ์',    emoji: '♒ คนแบกหม้อน้ำ', from: [1,20],  to: [2,18]  },
+    { name: 'มีน',      emoji: '♓ ปลา',         from: [2,19],  to: [3,20]  },
+    { name: 'เมษ',      emoji: '♈ แกะ',          from: [3,21],  to: [4,19]  },
+    { name: 'พฤษภ',    emoji: '♉ วัว',           from: [4,20],  to: [5,20]  },
+    { name: 'เมถุน',   emoji: '♊ คู่แฝด',       from: [5,21],  to: [6,20]  },
+    { name: 'กรกฎ',    emoji: '♋ ปู',            from: [6,21],  to: [7,22]  },
+    { name: 'สิงห์',   emoji: '♌ สิงโต',        from: [7,23],  to: [8,22]  },
+    { name: 'กันย์',   emoji: '♍ หญิงสาว',      from: [8,23],  to: [9,22]  },
+    { name: 'ตุลย์',   emoji: '♎ ตาชั่ง',       from: [9,23],  to: [10,22] },
+    { name: 'พิจิก',   emoji: '♏ แมงป่อง',      from: [10,23], to: [11,21] },
+    { name: 'ธนู',     emoji: '♐ คนยิงธนู',     from: [11,22], to: [12,21] },
+  ];
+  for (const s of signs) {
+    const [fm, fd] = s.from, [tm, td] = s.to;
+    if ((month === fm && day >= fd) || (month === tm && day <= td)) {
+      return s;
+    }
+  }
+  return signs[0]; // มกร (วันสิ้นปี)
+}
+
+/* ── ปีนักษัตร ── */
+function getChineseZodiac(yearCE) {
+  const animals = [
+    { name: 'วอก (ลิง)',    emoji: '🐒' },
+    { name: 'ระกา (ไก่)',  emoji: '🐓' },
+    { name: 'จอ (สุนัข)',  emoji: '🐕' },
+    { name: 'กุน (หมู)',   emoji: '🐗' },
+    { name: 'ชวด (หนู)',   emoji: '🐭' },
+    { name: 'ฉลู (วัว)',   emoji: '🐮' },
+    { name: 'ขาล (เสือ)',  emoji: '🐯' },
+    { name: 'เถาะ (กระต่าย)', emoji: '🐰' },
+    { name: 'มะโรง (มังกร)', emoji: '🐲' },
+    { name: 'มะเส็ง (งู)', emoji: '🐍' },
+    { name: 'มะเมีย (ม้า)', emoji: '🐴' },
+    { name: 'มะแม (แพะ)',  emoji: '🐐' },
+  ];
+  return animals[(yearCE - 1920) % 12];
+}
+
+/* ── Fun facts ── */
+function getFunFact(totalDays, yrs) {
+  const facts = [
+    `คุณมีชีวิตมาแล้ว <strong>${fmt(totalDays)}</strong> วัน — เท่ากับหัวใจเต้นไปแล้วกว่า <strong>${fmt(totalDays * 100000)}</strong> ครั้ง`,
+    `ใน ${yrs} ปีที่ผ่านมา คุณหายใจไปแล้วกว่า <strong>${fmt(yrs * 8000000)}</strong> ครั้ง`,
+    `คุณนอนหลับไปแล้วประมาณ <strong>${fmt(Math.floor(totalDays * 8 / 24))}</strong> วัน หรือราว 1 ใน 3 ของชีวิต`,
+    `ถ้าเดินต่อเนื่องตลอด ${yrs} ปี คุณอาจเดินได้ระยะทางรอบโลกถึง <strong>${Math.max(1, Math.floor(yrs / 3))}</strong> รอบ`,
+    `ผมและเล็บของคุณยาวขึ้นไปแล้วรวมกันกว่า <strong>${fmt(totalDays * 3)}</strong> มิลลิเมตร ตลอด ${yrs} ปี`,
+  ];
+  return facts[Math.floor(Math.random() * facts.length)];
+}
+
+/* ── Main calculate ── */
+function calculate() {
+  const bDay = parseInt(daySelect.value), bMon = parseInt(monSelect.value), bYr = parseInt(yearSelect.value);
+  const tDay2 = parseInt(toDay.value), tMon2 = parseInt(toMon.value), tYr2 = parseInt(toYear.value);
+
+  if (!bDay || !bMon || !bYr)    { alert('กรุณาเลือกวันเดือนปีเกิดให้ครบ'); return; }
+  if (!tDay2 || !tMon2 || !tYr2) { alert('กรุณาเลือกวันที่ต้องการคำนวณถึงให้ครบ'); return; }
+
+  const bd = new Date(toCE(bYr), bMon - 1, bDay);
+  const td = new Date(toCE(tYr2), tMon2 - 1, tDay2);
+  if (bd > td) { alert('วันเกิดต้องมาก่อนวันที่คำนวณถึง'); return; }
+
+  let yrs = td.getFullYear() - bd.getFullYear();
+  let mos = td.getMonth() - bd.getMonth();
+  let days = td.getDate() - bd.getDate();
+  if (days < 0) { mos--; days += new Date(td.getFullYear(), td.getMonth(), 0).getDate(); }
+  if (mos  < 0) { yrs--; mos += 12; }
+
+  const diff   = td - bd;
+  const tDays  = Math.floor(diff / 86400000);
+  const tWks   = Math.floor(tDays / 7);
+  const tMos   = yrs * 12 + mos;
+  const tHrs   = tDays * 24;
+
+  // Countdown
+  let next = new Date(td.getFullYear(), bd.getMonth(), bd.getDate());
+  if (next <= td) next.setFullYear(next.getFullYear() + 1);
+  const until = Math.ceil((next - td) / 86400000);
+
+  // Zodiac
+  const zodiac = getZodiac(bDay, bMon);
+  const cz     = getChineseZodiac(toCE(bYr));
+
+  // Display
+  document.getElementById('ageYears').textContent     = fmt(yrs);
+  document.getElementById('ageDetail').innerHTML      = `<strong>${mos}</strong> เดือน <strong>${days}</strong> วัน`;
+  document.getElementById('totalMonths').textContent  = fmt(tMos);
+  document.getElementById('totalWeeks').textContent   = fmt(tWks);
+  document.getElementById('totalDays').textContent    = fmt(tDays);
+  document.getElementById('totalHours').textContent   = fmt(tHrs);
+
+  // Countdown
+  if (until === 0) {
+    document.getElementById('countdownDays').textContent = '🎂';
+    document.getElementById('countdownMsg').innerHTML    = '<strong>วันนี้เป็นวันเกิด!</strong> สุขสันต์วันเกิดนะ 🎉';
+  } else {
+    document.getElementById('countdownDays').textContent = fmt(until);
+    document.getElementById('countdownMsg').innerHTML    = `<strong>วันจนถึงวันเกิด</strong><br>${bDay} ${thaiMonths[bMon-1]} ${toCE(bYr)+543}`;
+  }
+
+  // Zodiac
+  document.getElementById('zodiacTh').textContent    = `ราศี${zodiac.name}`;
+  document.getElementById('zodiacEmoji').textContent = zodiac.emoji;
+  document.getElementById('chineseZodiac').textContent = `ปี${cz.name}`;
+  document.getElementById('chineseEmoji').textContent  = cz.emoji;
+
+  // Fun fact
+  document.getElementById('funFact').innerHTML = getFunFact(tDays, yrs);
+
+  // Store for share
+  lastResult = { yrs, mos, days, tDays, tWks, tMos, tHrs, until, zodiac, cz, bDay, bMon, bYr };
+
+  const box = document.getElementById('resultBox');
+  box.style.display = 'block';
+  requestAnimationFrame(() => box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+}
+
+/* ── Copy / Share ── */
+function copyResult() {
+  if (!lastResult) return;
+  const { yrs, mos, days, tDays, until, zodiac, cz, bDay, bMon, bYr } = lastResult;
+  const bdStr = `${bDay} ${thaiMonths[bMon-1]} ${toCE(bYr)+543}`;
+  const text =
+`วันเกิด ${bdStr}
+อายุ ${fmt(yrs)} ปี ${mos} เดือน ${days} วัน (${fmt(tDays)} วัน)
+ราศี${zodiac.name} · ปี${cz.name}
+อีก ${fmt(until)} วันถึงวันเกิดหน้า
+kamnuanaayu.com`;
+
+  navigator.clipboard.writeText(text).then(() => showToast()).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); showToast();
+  });
+}
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function fmt(n) { return Number(n).toLocaleString('th-TH'); }
+</script>
+</body>
+</html>
