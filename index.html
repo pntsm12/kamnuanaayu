@@ -12,25 +12,45 @@
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://kamnuanaayu.com/">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
-<!-- Google AdSense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1063556443578237"
-     crossorigin="anonymous"></script>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1063556443578237" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ── Light mode (default) ── */
 :root {
-  --bg:      #FFFFFF;
-  --bg2:     #F7F7F5;
-  --bg3:     #F0EFEC;
-  --border:  #E4E4E0;
-  --border2: #D4D4CF;
-  --text:    #1A1917;
-  --text2:   #706F6B;
-  --text3:   #B0AFA9;
-  --ink:     #1A1917;
-  --accent:  #2563EB;
+  --bg:        #FFFFFF;
+  --bg2:       #F7F7F5;
+  --bg3:       #F0EFEC;
+  --border:    #E4E4E0;
+  --border2:   #D4D4CF;
+  --text:      #1A1917;
+  --text2:     #706F6B;
+  --text3:     #B0AFA9;
+  --ink:       #1A1917;
+  --accent:    #2563EB;
+  --header-bg: rgba(255,255,255,0.92);
+  --logo-fill: #1A1917;
+  --shadow:    rgba(0,0,0,0.06);
+}
+
+/* ── Dark mode ── */
+[data-theme="dark"] {
+  --bg:        #0F0F0F;
+  --bg2:       #1A1A1A;
+  --bg3:       #222222;
+  --border:    #2A2A2A;
+  --border2:   #333333;
+  --text:      #F0EFE8;
+  --text2:     #9A9890;
+  --text3:     #555450;
+  --ink:       #F0EFE8;
+  --accent:    #60A5FA;
+  --header-bg: rgba(15,15,15,0.92);
+  --logo-fill: #F0EFE8;
+  --shadow:    rgba(0,0,0,0.3);
 }
 
 html { scroll-behavior: smooth; }
@@ -42,24 +62,64 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  transition: background .3s, color .3s;
 }
 
 /* ── Header ── */
 header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(255,255,255,0.92);
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
-  height: 52px;
+  height: 56px;
   display: flex; align-items: center;
-  padding: 0 24px;
+  padding: 0 20px;
+  gap: 10px;
 }
-.logo {
+
+.header-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; flex: 1;
+}
+
+.logo-icon svg { width: 32px; height: 32px; display: block; }
+.logo-icon svg path, .logo-icon svg rect { fill: var(--logo-fill); transition: fill .3s; }
+
+.logo-text {
+  display: flex; flex-direction: column; line-height: 1.1;
+}
+.logo-text-th {
   font-family: 'Noto Serif Thai', serif;
-  font-size: 20px; font-weight: 700;
-  color: var(--ink); letter-spacing: -0.3px;
+  font-size: 16px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.2px;
 }
+.logo-text-en {
+  font-size: 10px; font-weight: 500;
+  color: var(--text3); letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.header-tool {
+  flex: 1; text-align: center;
+}
+.header-tool-name {
+  font-size: 15px; font-weight: 600;
+  color: var(--text2);
+}
+.dark-toggle {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: all .2s;
+  color: var(--text2);
+  flex-shrink: 0;
+}
+.dark-toggle:hover { border-color: var(--border2); color: var(--text); }
 
 /* ── Ad ── */
 .ad-strip {
@@ -80,19 +140,19 @@ header {
 .ad-mid { display: flex; justify-content: center; margin: 28px 0; }
 
 /* ── Layout ── */
-.page-wrap { max-width: 640px; margin: 0 auto; padding: 40px 20px 64px; }
+.page-wrap { max-width: 640px; margin: 0 auto; padding: 36px 20px 64px; }
 
 /* ── Heading ── */
 .page-heading { margin-bottom: 32px; }
 .page-heading h1 {
   font-family: 'Noto Serif Thai', serif;
-  font-size: clamp(32px, 7vw, 48px);
-  font-weight: 700; color: var(--ink);
-  line-height: 1.15; letter-spacing: -0.8px;
+  font-size: clamp(28px, 6vw, 40px);
+  font-weight: 700; color: var(--text);
+  line-height: 1.15; letter-spacing: -0.5px;
 }
 .page-heading p { margin-top: 8px; font-size: 15px; color: var(--text2); }
 
-/* ── Form elements ── */
+/* ── Form ── */
 hr.section-hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
 
 .field-label {
@@ -117,7 +177,7 @@ hr.section-hr { border: none; border-top: 1px solid var(--border); margin: 28px 
   cursor: pointer; transition: all .15s; line-height: 1.6;
 }
 .era-btn + .era-btn { border-left: 1.5px solid var(--border2); }
-.era-btn.active { background: var(--ink); color: #fff; }
+.era-btn.active { background: var(--ink); color: var(--bg); }
 
 .date-inputs { display: grid; grid-template-columns: 0.8fr 1.5fr 1.2fr; gap: 8px; }
 @media (max-width: 380px) {
@@ -141,14 +201,15 @@ select {
 }
 select:hover { border-color: var(--border2); }
 select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+select option { background: var(--bg); color: var(--text); }
 
 /* ── Buttons ── */
 .btn-calc {
   width: 100%; margin-top: 24px; padding: 13px;
-  background: var(--ink); color: #fff; border: none;
+  background: var(--ink); color: var(--bg); border: none;
   border-radius: 9px; font-family: 'Sarabun', sans-serif;
   font-size: 15px; font-weight: 600; cursor: pointer;
-  letter-spacing: 0.2px; transition: opacity .15s, transform .1s;
+  transition: opacity .15s, transform .1s;
 }
 .btn-calc:hover { opacity: 0.85; }
 .btn-calc:active { transform: scale(0.99); }
@@ -158,21 +219,17 @@ select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235
   background: transparent; border: 1.5px solid var(--border);
   border-radius: 9px; font-family: 'Sarabun', sans-serif;
   font-size: 14px; color: var(--text2); cursor: pointer;
-  transition: border-color .15s, color .15s;
+  transition: all .15s;
 }
 .btn-today:hover { border-color: var(--border2); color: var(--text); }
 
 /* ── Result ── */
-.result-box {
-  display: none; margin-top: 36px;
-  animation: fadeUp .35s ease;
-}
+.result-box { display: none; margin-top: 36px; animation: fadeUp .35s ease; }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Age hero */
 .result-main {
   padding: 32px 0 28px;
   border-top: 1.5px solid var(--border);
@@ -180,43 +237,39 @@ select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235
   margin-bottom: 20px;
 }
 .result-label {
-  font-size: 12px; font-weight: 600;
-  letter-spacing: 1.2px; text-transform: uppercase;
-  color: var(--text3); margin-bottom: 6px;
+  font-size: 12px; font-weight: 600; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
 }
 .result-age {
   font-family: 'Noto Serif Thai', serif;
   font-size: clamp(72px, 18vw, 108px);
-  font-weight: 700; color: var(--ink);
+  font-weight: 700; color: var(--text);
   line-height: 1; letter-spacing: -3px;
 }
 .result-unit {
   font-family: 'Noto Serif Thai', serif;
   font-size: 28px; font-weight: 400; color: var(--text2);
-  margin-left: 8px; vertical-align: bottom; margin-bottom: 8px;
-  display: inline-block; letter-spacing: -0.5px;
+  margin-left: 8px; vertical-align: bottom;
+  display: inline-block; margin-bottom: 8px;
 }
-.result-detail { margin-top: 10px; font-size: 17px; color: var(--text2); }
+.result-detail { font-size: 17px; color: var(--text2); }
 .result-detail strong { color: var(--text); font-weight: 600; }
 
-/* Stats grid */
 .stats-row {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 1px; background: var(--border);
-  border: 1.5px solid var(--border);
-  border-radius: 10px; overflow: hidden; margin-bottom: 12px;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  overflow: hidden; margin-bottom: 12px;
 }
 .stat-cell { background: var(--bg); padding: 18px 16px; text-align: center; }
 .stat-num {
-  font-family: 'Noto Serif Thai', serif;
-  font-size: 26px; font-weight: 700; color: var(--ink);
-  letter-spacing: -0.5px; line-height: 1.1;
+  font-family: 'Noto Serif Thai', serif; font-size: 26px;
+  font-weight: 700; color: var(--text); letter-spacing: -0.5px; line-height: 1.1;
 }
 .stat-label { font-size: 12px; color: var(--text3); margin-top: 3px; }
 
-/* Countdown banner */
 .countdown-banner {
-  background: var(--ink); color: #fff;
+  background: var(--ink); color: var(--bg);
   border-radius: 10px; padding: 18px 20px;
   margin-bottom: 12px;
   display: flex; align-items: center; gap: 14px;
@@ -224,36 +277,23 @@ select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235
 .countdown-days {
   font-family: 'Noto Serif Thai', serif;
   font-size: 40px; font-weight: 700;
-  line-height: 1; letter-spacing: -1px;
-  flex-shrink: 0;
+  line-height: 1; letter-spacing: -1px; flex-shrink: 0;
 }
 .countdown-text { font-size: 14px; line-height: 1.5; }
 .countdown-text .cd-label { font-size: 11px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
 .countdown-text strong { font-size: 15px; font-weight: 600; }
 
-/* Fun fact + zodiac row */
-.extra-row {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 10px; margin-bottom: 12px;
-}
+.extra-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
 @media (max-width: 420px) { .extra-row { grid-template-columns: 1fr; } }
 
 .extra-card {
   background: var(--bg2); border: 1.5px solid var(--border);
   border-radius: 10px; padding: 16px;
 }
-.extra-card .ec-label {
-  font-size: 11px; font-weight: 600; letter-spacing: 1px;
-  text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
-}
-.extra-card .ec-val {
-  font-family: 'Noto Serif Thai', serif;
-  font-size: 18px; font-weight: 700; color: var(--ink);
-  line-height: 1.3;
-}
-.extra-card .ec-sub { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.ec-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+.ec-val { font-family: 'Noto Serif Thai', serif; font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.ec-sub { font-size: 13px; color: var(--text2); margin-top: 2px; }
 
-/* Fun fact card */
 .funfact-card {
   background: var(--bg2); border: 1.5px solid var(--border);
   border-radius: 10px; padding: 16px 18px;
@@ -262,39 +302,71 @@ select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235
 }
 .funfact-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
 .funfact-text { font-size: 14px; color: var(--text2); line-height: 1.6; }
-.funfact-text strong { color: var(--ink); font-weight: 600; }
+.funfact-text strong { color: var(--text); font-weight: 600; }
 
-/* Share button */
-.btn-share {
-  width: 100%; padding: 12px;
+/* ── Share buttons ── */
+.share-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px; margin-bottom: 12px;
+}
+.btn-share-action {
+  padding: 11px 8px;
+  border-radius: 9px; border: 1.5px solid var(--border);
   background: transparent;
-  border: 1.5px solid var(--border);
-  border-radius: 9px; font-family: 'Sarabun', sans-serif;
-  font-size: 14px; color: var(--text2);
-  cursor: pointer; margin-bottom: 12px;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: 'Sarabun', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: var(--text2); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
   transition: all .15s;
 }
-.btn-share:hover { border-color: var(--ink); color: var(--ink); }
+.btn-share-action:hover { border-color: var(--border2); color: var(--text); }
+.btn-share-line { }
+.btn-share-line:hover { border-color: var(--border2); color: var(--text); }
+.btn-share-fb { }
+.btn-share-fb:hover { border-color: var(--border2); color: var(--text); }
 
-/* Copy toast */
-.toast {
-  position: fixed; bottom: 24px; left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: var(--ink); color: #fff;
-  padding: 10px 20px; border-radius: 8px;
-  font-size: 14px; font-weight: 500;
-  transition: transform .3s ease; z-index: 999;
-  pointer-events: none;
+/* ── History ── */
+.history-section {
+  margin-top: 32px;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
 }
-.toast.show { transform: translateX(-50%) translateY(0); }
+.history-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.history-title { font-size: 13px; font-weight: 600; color: var(--text2); letter-spacing: 0.3px; }
+.btn-clear-history {
+  font-size: 12px; color: var(--text3);
+  background: none; border: none; cursor: pointer;
+  font-family: 'Sarabun', sans-serif;
+  transition: color .15s;
+}
+.btn-clear-history:hover { color: var(--text2); }
+
+.history-list { display: flex; flex-direction: column; gap: 8px; }
+.history-item {
+  background: var(--bg2); border: 1.5px solid var(--border);
+  border-radius: 9px; padding: 12px 16px;
+  cursor: pointer; transition: border-color .15s;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.history-item:hover { border-color: var(--border2); }
+.history-item-left { flex: 1; }
+.history-item-age {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 18px; font-weight: 700; color: var(--text);
+  line-height: 1.2;
+}
+.history-item-date { font-size: 12px; color: var(--text3); margin-top: 2px; }
+.history-item-right { font-size: 12px; color: var(--text3); }
+.history-empty { font-size: 14px; color: var(--text3); text-align: center; padding: 16px 0; }
 
 /* ── Info ── */
 .info-section { border-top: 1px solid var(--border); padding-top: 32px; }
 .info-section h2 {
-  font-family: 'Noto Serif Thai', serif;
-  font-size: 18px; font-weight: 700; color: var(--ink);
-  margin-bottom: 8px; letter-spacing: -0.2px;
+  font-family: 'Noto Serif Thai', serif; font-size: 18px;
+  font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.2px;
 }
 .info-section h2.mt { margin-top: 24px; }
 .info-section p { font-size: 14px; color: var(--text2); line-height: 1.85; }
@@ -307,12 +379,47 @@ footer {
 }
 footer a { color: var(--text3); text-decoration: none; }
 footer a:hover { color: var(--text2); text-decoration: underline; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ink); color: var(--bg);
+  padding: 10px 20px; border-radius: 8px;
+  font-size: 14px; font-weight: 500;
+  transition: transform .3s ease; z-index: 999; pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
 
 <header>
-  <span class="logo">คำนวณอายุ</span>
+  <a class="header-logo" href="/">
+    <div class="logo-icon">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="7" fill="var(--logo-fill)"/>
+        <text x="5" y="24" font-family="Arial Black, sans-serif" font-size="22" font-weight="900" fill="var(--bg)">K</text>
+        <text x="14" y="27" font-family="Arial, sans-serif" font-size="8" font-weight="700" fill="var(--bg)">+×=</text>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="logo-text-th">คำนวณ</span>
+      <span class="logo-text-en">KAMNUAN</span>
+    </div>
+  </a>
+
+  <button class="dark-toggle" onclick="toggleDark()" id="darkBtn" title="เปลี่ยนธีม">
+    <svg id="iconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+      <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    <svg id="iconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
 </header>
 
 <div class="ad-strip">
@@ -323,7 +430,7 @@ footer a:hover { color: var(--text2); text-decoration: underline; }
 
   <div class="page-heading">
     <h1>คำนวณอายุ</h1>
-    <p>รู้อายุที่แน่นอน พร้อมราศี ปีนักษัตร และอีกกี่วันจะถึงวันเกิด</p>
+    <p>กรอกวันเกิด รู้อายุทันที พร้อมราศี ปีนักษัตร และนับถอยหลังวันเกิด</p>
   </div>
 
   <!-- Birth date -->
@@ -352,39 +459,24 @@ footer a:hover { color: var(--text2); text-decoration: underline; }
   <button class="btn-calc" onclick="calculate()">คำนวณอายุ</button>
   <button class="btn-today" onclick="setToday()">ใช้วันนี้เป็นวันคำนวณ</button>
 
-  <!-- ── RESULT ── -->
+  <!-- Result -->
   <div class="result-box" id="resultBox">
-
-    <!-- อายุหลัก -->
     <div class="result-main">
       <div class="result-label">อายุของคุณ</div>
       <div>
-        <span class="result-age" id="ageYears">–</span><span class="result-unit">ปี</span>
+        <span class="result-age" id="ageYears">–</span>
+        <span class="result-unit">ปี</span>
       </div>
       <div class="result-detail" id="ageDetail"><strong>–</strong> เดือน <strong>–</strong> วัน</div>
     </div>
 
-    <!-- สถิติ 4 ช่อง -->
     <div class="stats-row">
-      <div class="stat-cell">
-        <div class="stat-num" id="totalMonths">–</div>
-        <div class="stat-label">เดือนทั้งหมด</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-num" id="totalWeeks">–</div>
-        <div class="stat-label">สัปดาห์ทั้งหมด</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-num" id="totalDays">–</div>
-        <div class="stat-label">วันทั้งหมด</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-num" id="totalHours">–</div>
-        <div class="stat-label">ชั่วโมงทั้งหมด</div>
-      </div>
+      <div class="stat-cell"><div class="stat-num" id="totalMonths">–</div><div class="stat-label">เดือนทั้งหมด</div></div>
+      <div class="stat-cell"><div class="stat-num" id="totalWeeks">–</div><div class="stat-label">สัปดาห์ทั้งหมด</div></div>
+      <div class="stat-cell"><div class="stat-num" id="totalDays">–</div><div class="stat-label">วันทั้งหมด</div></div>
+      <div class="stat-cell"><div class="stat-num" id="totalHours">–</div><div class="stat-label">ชั่วโมงทั้งหมด</div></div>
     </div>
 
-    <!-- Countdown วันเกิด -->
     <div class="countdown-banner" id="countdownBanner">
       <div class="countdown-days" id="countdownDays">–</div>
       <div class="countdown-text">
@@ -393,7 +485,6 @@ footer a:hover { color: var(--text2); text-decoration: underline; }
       </div>
     </div>
 
-    <!-- ราศี + ปีนักษัตร -->
     <div class="extra-row">
       <div class="extra-card">
         <div class="ec-label">ราศีเกิด</div>
@@ -407,25 +498,37 @@ footer a:hover { color: var(--text2); text-decoration: underline; }
       </div>
     </div>
 
-    <!-- Fun fact -->
     <div class="funfact-card">
       <div class="funfact-icon">✨</div>
-      <div class="funfact-text" id="funFact">–</div>
+      <div>
+        <div style="font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--text3); margin-bottom:6px;">รู้หรือเปล่า?</div>
+        <div class="funfact-text" id="funFact">–</div>
+      </div>
     </div>
 
-    <!-- Share -->
-    <button class="btn-share" onclick="copyResult()">
-      <span>📋</span> คัดลอกผลลัพธ์เพื่อแชร์
-    </button>
-
+    <!-- Share buttons -->
+    <div class="share-row">
+      <button class="btn-share-action btn-share-line" onclick="shareLine()">Line</button>
+      <button class="btn-share-action btn-share-fb" onclick="shareFacebook()">Facebook</button>
+      <button class="btn-share-action" onclick="copyResult()">คัดลอก</button>
+    </div>
   </div>
 
-  <!-- Ad mid -->
+  <!-- History -->
+  <div class="history-section">
+    <div class="history-header">
+      <span class="history-title">ประวัติการคำนวณ</span>
+      <button class="btn-clear-history" onclick="clearHistory()">ล้างประวัติ</button>
+    </div>
+    <div class="history-list" id="historyList">
+      <div class="history-empty">ยังไม่มีประวัติการคำนวณ</div>
+    </div>
+  </div>
+
   <div class="ad-mid">
     <div class="ad-728">📢 Google AdSense — 728×90 Leaderboard (In-content)</div>
   </div>
 
-  <!-- SEO -->
   <div class="info-section">
     <h2>วิธีใช้เครื่องคำนวณอายุ</h2>
     <p>เลือก วัน เดือน ปีเกิด (พ.ศ. หรือ ค.ศ.) แล้วกดคำนวณ ระบบจะแสดงอายุที่แน่นอน พร้อมราศี ปีนักษัตร นับถอยหลังวันเกิด และ fun fact เกี่ยวกับชีวิตของคุณ</p>
@@ -433,7 +536,6 @@ footer a:hover { color: var(--text2); text-decoration: underline; }
     <p>มีประโยชน์ในหลายสถานการณ์ เช่น สมัครงาน ทำประกันชีวิต สมัครเรียนหรือสอบ รวมถึงการเช็คสิทธิ์ต่างๆ ที่กำหนดตามช่วงอายุ</p>
   </div>
 
-  <!-- Ad bottom -->
   <div class="ad-mid" style="margin-bottom:0;">
     <div class="ad-728">📢 Google AdSense — 728×90 Leaderboard (Bottom)</div>
   </div>
@@ -445,9 +547,36 @@ footer a:hover { color: var(--text2); text-decoration: underline; }
   <p style="margin-top:4px;">ผลลัพธ์เป็นการคำนวณจากวันที่กรอก ควรตรวจสอบกับทะเบียนบ้านอย่างเป็นทางการ</p>
 </footer>
 
-<div class="toast" id="toast">คัดลอกแล้ว! 🎉</div>
+<div class="toast" id="toast">คัดลอกแล้ว!</div>
 
 <script>
+/* ══════════════════════════════
+   DARK MODE
+══════════════════════════════ */
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  applyTheme(theme);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('iconSun').style.display  = theme === 'dark'  ? 'block' : 'none';
+  document.getElementById('iconMoon').style.display = theme === 'light' ? 'block' : 'none';
+  localStorage.setItem('theme', theme);
+}
+
+function toggleDark() {
+  const current = document.documentElement.getAttribute('data-theme');
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+
+initTheme();
+
+/* ══════════════════════════════
+   DROPDOWNS
+══════════════════════════════ */
 const thaiMonths = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 
 const daySelect  = document.getElementById('bDay');
@@ -460,7 +589,6 @@ const toYear     = document.getElementById('toYear');
 let currentEra = 'BE';
 let lastResult = null;
 
-/* ── Dropdowns ── */
 function fillDaysMons(dSel, mSel) {
   for (let d = 1; d <= 31; d++) dSel.innerHTML += `<option value="${d}">${d}</option>`;
   thaiMonths.forEach((m, i) => mSel.innerHTML += `<option value="${i+1}">${m}</option>`);
@@ -502,54 +630,46 @@ function setToday() {
 }
 setToday();
 
-function fmt(n) { return n.toLocaleString('th-TH'); }
+function fmt(n) { return Number(n).toLocaleString('th-TH'); }
 function toCE(v) { return currentEra === 'BE' ? parseInt(v) - 543 : parseInt(v); }
 
-/* ── ราศี ── */
+/* ══════════════════════════════
+   ZODIAC
+══════════════════════════════ */
 function getZodiac(day, month) {
   const signs = [
-    { name: 'มกร',      emoji: '♑ แพะทะเล',   from: [12,22], to: [1,19]  },
-    { name: 'กุมภ์',    emoji: '♒ คนแบกหม้อน้ำ', from: [1,20],  to: [2,18]  },
-    { name: 'มีน',      emoji: '♓ ปลา',         from: [2,19],  to: [3,20]  },
-    { name: 'เมษ',      emoji: '♈ แกะ',          from: [3,21],  to: [4,19]  },
-    { name: 'พฤษภ',    emoji: '♉ วัว',           from: [4,20],  to: [5,20]  },
-    { name: 'เมถุน',   emoji: '♊ คู่แฝด',       from: [5,21],  to: [6,20]  },
-    { name: 'กรกฎ',    emoji: '♋ ปู',            from: [6,21],  to: [7,22]  },
-    { name: 'สิงห์',   emoji: '♌ สิงโต',        from: [7,23],  to: [8,22]  },
-    { name: 'กันย์',   emoji: '♍ หญิงสาว',      from: [8,23],  to: [9,22]  },
-    { name: 'ตุลย์',   emoji: '♎ ตาชั่ง',       from: [9,23],  to: [10,22] },
-    { name: 'พิจิก',   emoji: '♏ แมงป่อง',      from: [10,23], to: [11,21] },
-    { name: 'ธนู',     emoji: '♐ คนยิงธนู',     from: [11,22], to: [12,21] },
+    { name:'มกร',    emoji:'♑ แพะทะเล',      from:[12,22], to:[1,19]  },
+    { name:'กุมภ์',  emoji:'♒ คนแบกหม้อน้ำ', from:[1,20],  to:[2,18]  },
+    { name:'มีน',    emoji:'♓ ปลา',           from:[2,19],  to:[3,20]  },
+    { name:'เมษ',    emoji:'♈ แกะ',           from:[3,21],  to:[4,19]  },
+    { name:'พฤษภ',  emoji:'♉ วัว',            from:[4,20],  to:[5,20]  },
+    { name:'เมถุน', emoji:'♊ คู่แฝด',         from:[5,21],  to:[6,20]  },
+    { name:'กรกฎ',  emoji:'♋ ปู',             from:[6,21],  to:[7,22]  },
+    { name:'สิงห์', emoji:'♌ สิงโต',          from:[7,23],  to:[8,22]  },
+    { name:'กันย์', emoji:'♍ หญิงสาว',        from:[8,23],  to:[9,22]  },
+    { name:'ตุลย์', emoji:'♎ ตาชั่ง',         from:[9,23],  to:[10,22] },
+    { name:'พิจิก', emoji:'♏ แมงป่อง',        from:[10,23], to:[11,21] },
+    { name:'ธนู',   emoji:'♐ คนยิงธนู',       from:[11,22], to:[12,21] },
   ];
   for (const s of signs) {
     const [fm, fd] = s.from, [tm, td] = s.to;
-    if ((month === fm && day >= fd) || (month === tm && day <= td)) {
-      return s;
-    }
+    if ((month === fm && day >= fd) || (month === tm && day <= td)) return s;
   }
-  return signs[0]; // มกร (วันสิ้นปี)
+  return signs[0];
 }
 
-/* ── ปีนักษัตร ── */
 function getChineseZodiac(yearCE) {
   const animals = [
-    { name: 'วอก (ลิง)',    emoji: '🐒' },
-    { name: 'ระกา (ไก่)',  emoji: '🐓' },
-    { name: 'จอ (สุนัข)',  emoji: '🐕' },
-    { name: 'กุน (หมู)',   emoji: '🐗' },
-    { name: 'ชวด (หนู)',   emoji: '🐭' },
-    { name: 'ฉลู (วัว)',   emoji: '🐮' },
-    { name: 'ขาล (เสือ)',  emoji: '🐯' },
-    { name: 'เถาะ (กระต่าย)', emoji: '🐰' },
-    { name: 'มะโรง (มังกร)', emoji: '🐲' },
-    { name: 'มะเส็ง (งู)', emoji: '🐍' },
-    { name: 'มะเมีย (ม้า)', emoji: '🐴' },
-    { name: 'มะแม (แพะ)',  emoji: '🐐' },
+    {name:'วอก (ลิง)',emoji:'🐒'},{name:'ระกา (ไก่)',emoji:'🐓'},
+    {name:'จอ (สุนัข)',emoji:'🐕'},{name:'กุน (หมู)',emoji:'🐗'},
+    {name:'ชวด (หนู)',emoji:'🐭'},{name:'ฉลู (วัว)',emoji:'🐮'},
+    {name:'ขาล (เสือ)',emoji:'🐯'},{name:'เถาะ (กระต่าย)',emoji:'🐰'},
+    {name:'มะโรง (มังกร)',emoji:'🐲'},{name:'มะเส็ง (งู)',emoji:'🐍'},
+    {name:'มะเมีย (ม้า)',emoji:'🐴'},{name:'มะแม (แพะ)',emoji:'🐐'},
   ];
   return animals[(yearCE - 1920) % 12];
 }
 
-/* ── Fun facts ── */
 function getFunFact(totalDays, yrs) {
   const facts = [
     `คุณมีชีวิตมาแล้ว <strong>${fmt(totalDays)}</strong> วัน — เท่ากับหัวใจเต้นไปแล้วกว่า <strong>${fmt(totalDays * 100000)}</strong> ครั้ง`,
@@ -561,7 +681,9 @@ function getFunFact(totalDays, yrs) {
   return facts[Math.floor(Math.random() * facts.length)];
 }
 
-/* ── Main calculate ── */
+/* ══════════════════════════════
+   CALCULATE
+══════════════════════════════ */
 function calculate() {
   const bDay = parseInt(daySelect.value), bMon = parseInt(monSelect.value), bYr = parseInt(yearSelect.value);
   const tDay2 = parseInt(toDay.value), tMon2 = parseInt(toMon.value), tYr2 = parseInt(toYear.value);
@@ -579,30 +701,26 @@ function calculate() {
   if (days < 0) { mos--; days += new Date(td.getFullYear(), td.getMonth(), 0).getDate(); }
   if (mos  < 0) { yrs--; mos += 12; }
 
-  const diff   = td - bd;
-  const tDays  = Math.floor(diff / 86400000);
-  const tWks   = Math.floor(tDays / 7);
-  const tMos   = yrs * 12 + mos;
-  const tHrs   = tDays * 24;
+  const diff  = td - bd;
+  const tDays = Math.floor(diff / 86400000);
+  const tWks  = Math.floor(tDays / 7);
+  const tMos  = yrs * 12 + mos;
+  const tHrs  = tDays * 24;
 
-  // Countdown
   let next = new Date(td.getFullYear(), bd.getMonth(), bd.getDate());
   if (next <= td) next.setFullYear(next.getFullYear() + 1);
   const until = Math.ceil((next - td) / 86400000);
 
-  // Zodiac
   const zodiac = getZodiac(bDay, bMon);
   const cz     = getChineseZodiac(toCE(bYr));
 
-  // Display
-  document.getElementById('ageYears').textContent     = fmt(yrs);
-  document.getElementById('ageDetail').innerHTML      = `<strong>${mos}</strong> เดือน <strong>${days}</strong> วัน`;
-  document.getElementById('totalMonths').textContent  = fmt(tMos);
-  document.getElementById('totalWeeks').textContent   = fmt(tWks);
-  document.getElementById('totalDays').textContent    = fmt(tDays);
-  document.getElementById('totalHours').textContent   = fmt(tHrs);
+  document.getElementById('ageYears').textContent    = fmt(yrs);
+  document.getElementById('ageDetail').innerHTML     = `<strong>${mos}</strong> เดือน <strong>${days}</strong> วัน`;
+  document.getElementById('totalMonths').textContent = fmt(tMos);
+  document.getElementById('totalWeeks').textContent  = fmt(tWks);
+  document.getElementById('totalDays').textContent   = fmt(tDays);
+  document.getElementById('totalHours').textContent  = fmt(tHrs);
 
-  // Countdown
   if (until === 0) {
     document.getElementById('countdownDays').textContent = '🎂';
     document.getElementById('countdownMsg').innerHTML    = '<strong>วันนี้เป็นวันเกิด!</strong> สุขสันต์วันเกิดนะ 🎉';
@@ -611,36 +729,45 @@ function calculate() {
     document.getElementById('countdownMsg').innerHTML    = `<strong>วันจนถึงวันเกิด</strong><br>${bDay} ${thaiMonths[bMon-1]} ${toCE(bYr)+543}`;
   }
 
-  // Zodiac
-  document.getElementById('zodiacTh').textContent    = `ราศี${zodiac.name}`;
-  document.getElementById('zodiacEmoji').textContent = zodiac.emoji;
+  document.getElementById('zodiacTh').textContent      = `ราศี${zodiac.name}`;
+  document.getElementById('zodiacEmoji').textContent   = zodiac.emoji;
   document.getElementById('chineseZodiac').textContent = `ปี${cz.name}`;
   document.getElementById('chineseEmoji').textContent  = cz.emoji;
-
-  // Fun fact
   document.getElementById('funFact').innerHTML = getFunFact(tDays, yrs);
 
-  // Store for share
   lastResult = { yrs, mos, days, tDays, tWks, tMos, tHrs, until, zodiac, cz, bDay, bMon, bYr };
+
+  saveHistory(lastResult);
 
   const box = document.getElementById('resultBox');
   box.style.display = 'block';
   requestAnimationFrame(() => box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
 }
 
-/* ── Copy / Share ── */
-function copyResult() {
-  if (!lastResult) return;
+/* ══════════════════════════════
+   SHARE
+══════════════════════════════ */
+function getShareText() {
+  if (!lastResult) return '';
   const { yrs, mos, days, tDays, until, zodiac, cz, bDay, bMon, bYr } = lastResult;
   const bdStr = `${bDay} ${thaiMonths[bMon-1]} ${toCE(bYr)+543}`;
-  const text =
-`วันเกิด ${bdStr}
-อายุ ${fmt(yrs)} ปี ${mos} เดือน ${days} วัน (${fmt(tDays)} วัน)
-ราศี${zodiac.name} · ปี${cz.name}
-อีก ${fmt(until)} วันถึงวันเกิดหน้า
-kamnuanaayu.com`;
+  return `วันเกิด ${bdStr}\nอายุ ${fmt(yrs)} ปี ${mos} เดือน ${days} วัน (${fmt(tDays)} วัน)\nราศี${zodiac.name} · ปี${cz.name}\nอีก ${fmt(until)} วันถึงวันเกิดหน้า\nhttps://pntsm12.github.io/kamnuanaayu/`;
+}
 
-  navigator.clipboard.writeText(text).then(() => showToast()).catch(() => {
+function shareLine() {
+  const text = encodeURIComponent(getShareText());
+  window.open(`https://line.me/R/msg/text/?${text}`, '_blank');
+}
+
+function shareFacebook() {
+  const url = encodeURIComponent('https://pntsm12.github.io/kamnuanaayu/');
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function copyResult() {
+  if (!lastResult) return;
+  const text = getShareText().replace('https://pntsm12.github.io/kamnuanaayu/', 'kamnuanaayu.com');
+  navigator.clipboard.writeText(text).then(showToast).catch(() => {
     const ta = document.createElement('textarea');
     ta.value = text; document.body.appendChild(ta);
     ta.select(); document.execCommand('copy');
@@ -654,7 +781,61 @@ function showToast() {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-function fmt(n) { return Number(n).toLocaleString('th-TH'); }
+/* ══════════════════════════════
+   HISTORY
+══════════════════════════════ */
+function saveHistory(result) {
+  const { yrs, mos, days, bDay, bMon, bYr } = result;
+  const bdStr = `${bDay} ${thaiMonths[bMon-1]} ${toCE(bYr)+543}`;
+  const item = {
+    age: `${fmt(yrs)} ปี ${mos} เดือน ${days} วัน`,
+    birth: bdStr,
+    time: new Date().toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' }),
+    data: { bDay, bMon, bYr }
+  };
+  let history = JSON.parse(localStorage.getItem('ageHistory') || '[]');
+  history.unshift(item);
+  history = history.slice(0, 5);
+  localStorage.setItem('ageHistory', JSON.stringify(history));
+  renderHistory();
+}
+
+function renderHistory() {
+  const list = document.getElementById('historyList');
+  const history = JSON.parse(localStorage.getItem('ageHistory') || '[]');
+  if (history.length === 0) {
+    list.innerHTML = '<div class="history-empty">ยังไม่มีประวัติการคำนวณ</div>';
+    return;
+  }
+  list.innerHTML = history.map((item, i) => `
+    <div class="history-item" onclick="loadHistory(${i})">
+      <div class="history-item-left">
+        <div class="history-item-age">${item.age}</div>
+        <div class="history-item-date">วันเกิด ${item.birth}</div>
+      </div>
+      <div class="history-item-right">${item.time}</div>
+    </div>
+  `).join('');
+}
+
+function loadHistory(index) {
+  const history = JSON.parse(localStorage.getItem('ageHistory') || '[]');
+  const item = history[index];
+  if (!item) return;
+  const { bDay, bMon, bYr } = item.data;
+  daySelect.value  = bDay;
+  monSelect.value  = bMon;
+  yearSelect.value = bYr;
+  calculate();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function clearHistory() {
+  localStorage.removeItem('ageHistory');
+  renderHistory();
+}
+
+renderHistory();
 </script>
 </body>
 </html>
